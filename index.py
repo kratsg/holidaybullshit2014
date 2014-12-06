@@ -33,7 +33,7 @@ def recordResult(phrase, imageID):
   formURL = "https://docs.google.com/forms/d/1J4BIqr06ZgOse-Eo7YpwGbdr3xRyIohgUSW2uq2iatk/formResponse"
   imageID_textbox = "entry.1503938973"
   phrase_textbox = "entry.1437664445"
-  payload = {imageID_textbox: imageID, phrase_textbox: phrase}
+  payload = {imageID_textbox: "%03d" % imageID, phrase_textbox: phrase}
   r = requests.post(formURL, params=payload)
   return r
 
