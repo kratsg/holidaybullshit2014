@@ -5,8 +5,9 @@
 </form>
 {% if imageID and phrase %}
   <hr />
-  <h1>{{ phase }}</h1>
-  <h2>Status Code: {{ status }}</h2>
+  <h1>Phrase: {{ phrase }}</h1>
+  <h2>ImageID: {{ imageID }}</h2>
+  <h3>Status Code: {{ status }}</h3>
   <img src="https://dopp0jlzdkkkq.cloudfront.net/single/{{ imageID }}.jpg" width="300" />
 {% endif %}
 
