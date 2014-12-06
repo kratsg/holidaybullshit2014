@@ -15,8 +15,9 @@ def index():
 def run(phrase):
   # capitalization and spaces do not matter
   # --> http://www.reddit.com/r/holidaybullshit/comments/2of5a8/strings_and_images/
-  path_to_cert = "/usr/lib/ssl/certs/ca-certificates.crt"  # heroku
-  payload = {'q': phrase.lower().replace(' ','')}
+  # normalize the phrase
+  phrase = phrase.lower().replace(' ','')
+  payload = {'q': phrase}
   # make request to get json, ignore SSL stuff
   r = requests.get('https://ask.cardsagainsthumanity.com/single', params=payload, verify=False)
   try:
