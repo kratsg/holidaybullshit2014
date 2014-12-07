@@ -7,6 +7,13 @@ from logging import FileHandler
 
 app = Flask(__name__)
 
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -15,6 +22,9 @@ def index():
 def run(phrase):
   # capitalization and spaces do not matter
   # --> http://www.reddit.com/r/holidaybullshit/comments/2of5a8/strings_and_images/
+  # fucking stop 9GAG army from spamming
+  if is_number(phrase):
+    return redirect(url_for('.index'))
   # normalize the phrase
   phrase = phrase.lower().replace(' ','')
   payload = {'q': phrase}
@@ -26,6 +36,7 @@ def run(phrase):
   except:
     pass
   return render_template('index.html', phrase=phrase, imageID=imageID, status=r.status_code)
+
 
 def recordResult(phrase, imageID):
   print "we are here!"
