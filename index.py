@@ -53,6 +53,13 @@ def set_cache(phrase, imageID):
 def index():
     return render_template('index.html')
 
+@app.route('/image/<imageID>')
+def redirectToImage(imageID):
+  try:
+    return redirect('http://dopp0jlzdkkkq.cloudfront.net/single/%d.jpg' % int(imageID))
+  except:
+    return redirect(url_for('.index'))
+
 @app.route('/phrase/<phrase>')
 def run(phrase):
   # capitalization and spaces do not matter
