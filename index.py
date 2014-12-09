@@ -45,7 +45,8 @@ def get_cache(phrase):
     try:
       return res[phrase], res['requests']
     except:
-      return res[phrase], 1
+      res = db.phrases.find_one({"_id": res['_id']})
+      return res[phrase], res['requests']-1
   else:
     # does not exist
     return None, 0
