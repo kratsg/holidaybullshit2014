@@ -8,7 +8,10 @@
   <h1>Phrase: {{ phrase }}</h1>
   <h2>ImageID: {{ imageID }}</h2>
   <h3>Status Code: {{ status }}</h3>
+  <h4>This phrase was requested {{ num_requests }} time{% if num_requests != 1 %}s{% endif %} before.</h4>
   <img src="https://dopp0jlzdkkkq.cloudfront.net/single/{{ imageID }}.jpg" width="300" />
+  <br />
+  <a href="http://www.reddit.com/r/holidaybullshit/search?q={{ phrase }}&restrict_sr=on">Try searching for the phrase on reddit!</a>
 {% endif %}
 
 <hr />
@@ -17,6 +20,7 @@
   <li>The damn github for this shit is on <a href="https://github.com/kratsg/holidaybullshit2014">github:kratsg/holidaybullshit2014</a>.</li>
   <li>See <a href="http://www.reddit.com/r/holidaybullshit/comments/2oewsy/running_list_of_guesses_and_results_of_the_puzzle/">this reddit thread</a> for more information.</li>
   <li>This takes in your phrase, grabs the imageID, and posts both to the following <a href="https://docs.google.com/spreadsheets/d/1AnhJAtUpkH5RuPhGSGaQBBvIU5dLn6R2tufpiNoR1dM/edit?usp=sharing">Google docs</a> spreadsheet.</li>
+  <li> The wiki is up <a href="http://www.reddit.com/r/holidaybullshit/wiki/index">here</a>.</li>
 </ul>
 
 <hr />
