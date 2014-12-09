@@ -1,9 +1,11 @@
 import os
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request, send_file
 import requests
 from urlparse import urlparse
 
 import pymongo
+
+from cStringIO import StringIO
 
 import logging
 from logging import FileHandler
@@ -55,11 +57,22 @@ def index():
 
 @app.route('/image/<imageID>')
 def redirectToImage(imageID):
+  doRedirect = request.args.get('redirect')
+  if doRedirect == "false" or doRedirect == None or doRedirect != "true":
+    doRedirect = False
   try:
-    return redirect('http://dopp0jlzdkkkq.cloudfront.net/single/%d.jpg' % int(imageID))
+    imageID = int(imageID)
   except:
     return redirect(url_for('.index'))
 
+  imageURL = 'http://dopp0jlzdkkkq.cloudfront.net/single/%d.jpg' % imageID
+  if doRedirect:
+    return redirect(imageURL)
+  else:
+    image = StringIO(requests.get(imageURL).content)
+    image.seek(0)
+    return send_file(image, attachment_filename='%d.jpgg' % imageID, mimetype='image/jpg'), 200
+ 
 @app.route('/phrase/<phrase>')
 def run(phrase):
   # capitalization and spaces do not matter
