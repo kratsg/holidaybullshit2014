@@ -76,7 +76,7 @@ def redirectToImage(imageID):
   else:
     image = StringIO(requests.get(imageURL).content)
     image.seek(0)
-    return send_file(image, attachment_filename='%d.jpgg' % imageID, mimetype='image/jpg'), 200
+    return send_file(image, attachment_filename='%d.jpg' % imageID, mimetype='image/jpeg'), 200
  
 @app.route('/phrase/<phrase>')
 def run(phrase):
