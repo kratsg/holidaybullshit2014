@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, url_for, request, send_file
+from flask import Flask, render_template, redirect, url_for, request, send_file, jsonify
 import requests
 from urlparse import urlparse
 
@@ -118,6 +118,11 @@ def recordResult(phrase, imageID):
   payload = {imageID_textbox: "%03d" % imageID, phrase_textbox: phrase}
   r = requests.post(formURL, params=payload)
   return r
+
+@app.route('/api/phrase/<phrase>')
+def apiPhrase(phrase):
+  cache, counts = get_cache(phrase)
+  return jsonify({"id": cache, "requests": counts})
 
 if __name__ == "__main__":
   file_handler = FileHandler("debug.log","a")                                                  
