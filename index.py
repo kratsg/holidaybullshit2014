@@ -36,17 +36,21 @@ def testdb():
   db.test_collection.insert({"testdoc":"totaltest"})
   print db.test_collection.find()[0]
 
-def get_cache(phrase):
+def get_cache(phrase, inc=True):
   db = dbconn()
   res = db.phrases.find_one({ phrase: {"$exists": "true"} })
   if res:
     # exists
-    db.phrases.update({"_id": res['_id']}, {"$inc": {"requests": 1}})
+    if inc:
+      db.phrases.update({"_id": res['_id']}, {"$inc": {"requests": 1}})
     try:
       return res[phrase], res['requests']
     except:
       res = db.phrases.find_one({"_id": res['_id']})
-      return res[phrase], res['requests']-1
+      if inc:
+        return res[phrase], res['requests']-1
+      else: # non inc, don't subtract
+        return res[phrase], res['requests']
   else:
     # does not exist
     return None, 0
@@ -121,7 +125,7 @@ def recordResult(phrase, imageID):
 
 @app.route('/api/phrase/<phrase>')
 def apiPhrase(phrase):
-  cache, counts = get_cache(phrase)
+  cache, counts = get_cache(phrase, inc=False)
   return jsonify({"id": cache, "requests": counts})
 
 if __name__ == "__main__":
